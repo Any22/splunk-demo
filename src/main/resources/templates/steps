@@ -1,0 +1,40 @@
+1. Stop the splunk first by cding.. into bin 
+   
+   cd Program Files\Splunk\bin   then type:  splunk stop
+
+2. Start the Splunk again 
+   cd Program Files\Splunk\bin   then type:  splunk start
+
+3. Go to localhost:8000 and we will see a window that will be asking for user id password , remember to provide the same credentials
+   that you had used while installing the splunk.
+4. Now We can see the splunk dash board .
+   we are here to get Token , index and source mainly
+   We go to settings menu then select "Data inputs"
+   then inside it we will choose "Http Event Collector"
+5. We will find Global settings option at the top left corner of the screen. note the port number here and note it down somewhere : 
+   Port : 8088
+6. click on New Token give a name and source name , not it down again 
+   name: employee-service-logs
+   Source Name Override : http-event-logs
+   click next
+7. The next step is Input Settings 
+   Index Name : employee_api  give it this name and click on save 
+   
+   
+   
+8. Now review and submit 
+source type : SLF4J logs
+9. add few dependency like splunk and slf4j related and exlude starter-logging 
+
+input type: 	Token
+Name:	employee-service-logs
+Source name override: 	http-event-logs
+Description:	N/A
+Enable indexer acknowledgements: 	No
+Output Group:	N/A
+Allowed indexes: employee_api
+Default index: employee_api
+Source Type : SLF4J logs
+App Context: launcher
+
+   
