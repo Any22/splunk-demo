@@ -1,7 +1,5 @@
 package org.demo.appsplunk.entity;
 
-import org.demo.appsplunk.dto.EmployeeDTO;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

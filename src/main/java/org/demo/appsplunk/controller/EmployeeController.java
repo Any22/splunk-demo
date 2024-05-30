@@ -9,6 +9,7 @@ import org.demo.appsplunk.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -25,18 +26,18 @@ public class EmployeeController {
 	
 	private final EmployeeService service;
 	
-	@PostMapping(value = "/create", consumes = {"application/json"})
-	  public ResponseEntity<String> createCustomer(@RequestBody EmployeeDTO employeeDTO ){
+	@PostMapping(value = "/create", consumes = APPLICATION_JSON_VALUE )
+	  public ResponseEntity<EmployeeDTO> createCustomer(@RequestBody EmployeeDTO employeeDTO ){
 		
 	    log.info("Creating Employee: The request payload {}"+ employeeDTO);
-	    service.saveTheEmp(employeeDTO);
+	    EmployeeDTO savedEmp= service.saveTheEmp(employeeDTO);
 	    
-	 return new ResponseEntity<>("Data created for : "+ employeeDTO.getEmpName(), HttpStatus.CREATED);
+	 return new ResponseEntity<>(savedEmp,HttpStatus.CREATED);
 		
 	}
 	
 	
-	 @GetMapping(produces= APPLICATION_JSON_VALUE, value = "/get-emp")
+	 @GetMapping(value = "/get-emp", produces= APPLICATION_JSON_VALUE )
 	    public ResponseEntity<List<EmployeeDTO>> getCustomer()  {
 		 
 	       try { 
@@ -49,6 +50,30 @@ public class EmployeeController {
 		        } 
 	    	   		log.info("The resposne payload {}"+ customerDto);
 		        return new ResponseEntity<>(customerDto, HttpStatus.OK);
+		        
+	       } catch (Exception ex) {
+			   log.error(ex.getMessage());
+	    	   throw ex;
+		   }
+	        
+	   }
+	 
+	 
+	 @GetMapping(value = "/get-emp/{empId}", produces= APPLICATION_JSON_VALUE )
+	    public ResponseEntity<EmployeeDTO> getSpecificCustomer(@PathVariable ("empId") Integer empId)  {
+		 
+	       try { 
+	    	   	  EmployeeDTO customerDto = service.getEmployee(empId);
+	        
+	    	   		if ( null == customerDto) {
+		        	
+		        	log.info("May not have Customer regsitered against the id: "+ empId);
+		            
+		        } 
+	    	   		log.info("The resposne payload {}"+ customerDto);
+	    	   		
+		        return new ResponseEntity<>(customerDto, HttpStatus.OK);
+		        
 	       } catch (Exception ex) {
 			   log.error(ex.getMessage());
 	    	   throw ex;

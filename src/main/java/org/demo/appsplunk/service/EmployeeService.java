@@ -1,6 +1,7 @@
 package org.demo.appsplunk.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.demo.appsplunk.dto.EmployeeDTO;
@@ -22,7 +23,7 @@ public class EmployeeService {
 	private final ModelMapper modelMapper;
 
 	
-	public void saveTheEmp(EmployeeDTO employeeDTO) {
+	public EmployeeDTO saveTheEmp(EmployeeDTO employeeDTO) {
 		Employee employee = Employee.builder()
 									.empName(employeeDTO.getEmpName())
 									.age(employeeDTO.getAge())
@@ -34,7 +35,7 @@ public class EmployeeService {
 		   
 		 employeeRepository.save(employee);
 	       
-		
+		return this.convertToDto(employee);
 	}
 
 
@@ -48,10 +49,30 @@ public class EmployeeService {
 	            .collect(Collectors.toList());
 	}
 
+	
+
+
+	public EmployeeDTO getEmployee(Integer empId) {
+		Optional<Employee> optionaEemployee = employeeRepository.findById(empId);
+		Employee employee = optionaEemployee.get();
+		EmployeeDTO employeeDTO = new EmployeeDTO();
+		try {
+				if (optionaEemployee.isPresent()) 
+					employeeDTO = this.convertToDto(employee);
+			  
+				
+		} catch(Exception ex) {
+			log.error("error encountered:" + ex.getMessage());
+		}
+		return employeeDTO;
+	
+	}
+	
 	 public EmployeeDTO convertToDto(Employee employee) {
 	    	
 	    	// converting into DTO
 	        return modelMapper.map(employee, EmployeeDTO.class);
 	    }
+
 
 }
