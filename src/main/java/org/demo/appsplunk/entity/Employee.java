@@ -23,7 +23,8 @@ public class Employee {
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "emp_record_seq")
 	@SequenceGenerator(name = "emp_record_seq", sequenceName = "emp_record_seq", allocationSize = 1)
-	private int id;
+	@Column(name="emp_Id" ,nullable=false)
+	private int empId;
 	@Column(name="emp_name" ,nullable=false)
     private String empName;
 	

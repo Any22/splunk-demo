@@ -27,12 +27,12 @@ public class EmployeeController {
 	private final EmployeeService service;
 	
 	@PostMapping(value = "/create", consumes = APPLICATION_JSON_VALUE )
-	  public ResponseEntity<EmployeeDTO> createCustomer(@RequestBody EmployeeDTO employeeDTO ){
+	  public ResponseEntity<String> createCustomer(@RequestBody EmployeeDTO employeeDTO ){
 		
 	    log.info("Creating Employee: The request payload {}"+ employeeDTO);
-	    EmployeeDTO savedEmp= service.saveTheEmp(employeeDTO);
+	String status =   service.saveTheEmp(employeeDTO);
 	    
-	 return new ResponseEntity<>(savedEmp,HttpStatus.CREATED);
+	 return new ResponseEntity<>(status,HttpStatus.CREATED);
 		
 	}
 	
@@ -60,7 +60,7 @@ public class EmployeeController {
 	 
 	 
 	 @GetMapping(value = "/get-emp/{empId}", produces= APPLICATION_JSON_VALUE )
-	    public ResponseEntity<EmployeeDTO> getSpecificCustomer(@PathVariable ("empId") Integer empId)  {
+	    public ResponseEntity<EmployeeDTO> getSpecificCustomer(@PathVariable int empId)  {
 		 
 	       try { 
 	    	   	  EmployeeDTO customerDto = service.getEmployee(empId);

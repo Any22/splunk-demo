@@ -37,4 +37,26 @@ Default index: employee_api
 Source Type : SLF4J logs
 App Context: launcher
 
-   
+   Commnads used :
+   alter table emp_record rename column id to emp_Id;
+   select * from emp_record;
+   INSERT INTO emp_record (emp_name, age, salary, gender, dept_name, city) 
+    VALUES ('Jane Smith', 25, 60000, 'Female', 'HR', 'San Francisco'); 
+    
+   INSERT INTO emp_record (emp_name, age, salary, gender, dept_name, city) 
+    VALUES ('Alice Johnson', 28, 70000, 'Female', 'Finance', 'Los Angeles'); 
+    
+   INSERT INTO emp_record (emp_name, age, salary, gender, dept_name, city)
+    VALUES ('Bob Brown', 35, 80000, 'Male', 'Marketing', 'Chicago'); 
+   SELECT * FROM emp_record;
+
+INSERT INTO emp_record (emp_name, age, salary, gender, dept_name, city) 
+VALUES ('John Doe', 30, 50000, 'Male', 'IT', 'New York');
+
+CREATE TABLE emp_record (
+ 	id SERIAL PRIMARY KEY, emp_name VARCHAR(50), 
+	age INTEGER, salary BIGINT, gender VARCHAR(10), 
+ 	dept_name VARCHAR(50),
+  	city VARCHAR(50) 
+  );
+
