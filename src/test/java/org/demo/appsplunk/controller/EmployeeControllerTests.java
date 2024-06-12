@@ -21,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,7 +36,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-@WebMvcTest(controllers =EmployeeController.class)
 @ExtendWith(MockitoExtension.class)
 @Slf4j
 @RequiredArgsConstructor
@@ -49,6 +49,9 @@ public class EmployeeControllerTests {
 	 *   org.mockito : mockito-junit-jupiter
 	 *  You can apply the extension by adding @ExtendWith(MockitoExtension.class) to the test class and 
 	 *  annotating mocked fields with @Mock. 
+	 *  https://medium.com/@husnapoyraz88/spring-data-jpa-unit-test-repository-layer-9e875390645e
+	 *  @DataJpaTest : provides a test slice for JPA repositories and initializes an in-memory database (like H2) for testing. However, 
+	 *  it does not automatically populate the database with test data.
 	 ***********************************************************************************************************************************/
 	 @Mock
 	 private EmployeeService service;
@@ -63,9 +66,10 @@ public class EmployeeControllerTests {
 	 
 	  @BeforeEach
 	  void setUp() {
-		  MockitoAnnotations.openMocks(this);  
+		  
 	  }
-//https://medium.com/javarevisited/restful-api-testing-in-java-with-mockito-controller-layer-f4605f8ffaf3
+      
+	  //https://medium.com/javarevisited/restful-api-testing-in-java-with-mockito-controller-layer-f4605f8ffaf3
        @Test
        void should_create_CustomerTest() throws Exception {
     	   

@@ -28,7 +28,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
@@ -51,7 +51,7 @@ public class EmployeeServiceTests {
 
     @Mock
     private EmployeeRepository employeeRepository;
-    // it should be intialized here other wise we will ecounter errors
+    // it should be intialized here other wise errors will be encountered 
 //    @Mock
 //    private ModelMapper modelMapper;
 
@@ -62,6 +62,7 @@ public class EmployeeServiceTests {
 
     @BeforeEach
     void setUp() {
+      
         empDTO = EmployeeDTO.builder()
                 .empId(12)
                 .empName("TestName")
@@ -136,7 +137,8 @@ public class EmployeeServiceTests {
 	/************************************************************************************************************************************
 	 * we are doing parameterized Test here : Some frequently used Parameterized Test Annotations are : @CSVSource, @CSVFileSource
 	 * @ValueSource
-	 * @EmptySource :Works for String, List, set ,map ,arrays of primitive datatypes (int[], char[] etc.)Objects arrays(String[], Integer[])
+	 * @EmptySource :Works for String, List, set ,map ,arrays of primitive datatypes (int[], char[] etc.)Objects arrays(String[], 
+	 * Integer[])
 	 *************************************************************************************************************************************/
 	@ParameterizedTest
 	@EmptySource
@@ -163,15 +165,16 @@ public class EmployeeServiceTests {
 	    assertEquals("TestName", employeeDTO.getEmpName());
 	}
 
-	@Test
-	public void get_Employee_not_found() {
-	    Integer empId = 999;
+	@ParameterizedTest
+	@ValueSource(ints = 999)
+	public void get_Employee_not_found(Integer id) {
+	   
 	    
 	    // Mock the repository to return an empty Optional when the employee is not found
-	    when(employeeRepository.findById(empId)).thenReturn(Optional.empty());
+	    when(employeeRepository.findById(id)).thenReturn(Optional.empty());
 
 	    // Call the method under test
-	    EmployeeDTO employeeDTO = service.getEmployee(empId);
+	    EmployeeDTO employeeDTO = service.getEmployee(id);
 
 	    // Assert that the employeeDTO is null (or handle as per your method's logic)
 	    assertNull(employeeDTO);
