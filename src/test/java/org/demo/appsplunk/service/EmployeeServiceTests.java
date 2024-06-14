@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,9 +34,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 /*************************************************************************************************************************************
- *we are mocking the Mapper method . We will stub its behavior in setup
+ *We are mocking the Mapper method . We will stub its behavior in setup
  *Some frequently used Assertions are : assertNull(),assertNotNull(),assertFalse(), assertTrue(), assertNotSame()(don't refer to same 
  *object), assertSame() , assertEquals() ,assertNotEquals() , assertArrayEquals() --> not for List.
  * @author sabaakhtar
@@ -43,7 +44,6 @@ import lombok.extern.slf4j.Slf4j;
  *************************************************************************************************************************************/
 
 @ExtendWith(MockitoExtension.class)
-@Slf4j
 public class EmployeeServiceTests {
 	
 	@InjectMocks
@@ -52,8 +52,8 @@ public class EmployeeServiceTests {
     @Mock
     private EmployeeRepository employeeRepository;
     // it should be intialized here other wise errors will be encountered 
-//    @Mock
-//    private ModelMapper modelMapper;
+    // @Mock
+    // private ModelMapper modelMapper;
 
     private EmployeeDTO empDTO;
     private EmployeeDTO empDTO1;
@@ -108,9 +108,9 @@ public class EmployeeServiceTests {
 	@Test
 	public void saveTheEmpOrNot () {
 		
-		// We don't need to stub employeeRepository.save because it returns nothing except for String message 
+		// Here stubbing employeeRepository.save is not required as it returns nothing except for String message(check service class)
 		String actual = service.saveTheEmp(empDTO);
-        log.info("the employee payload expected {}" + employee);
+     
 		assertEquals(employee.getAge(), empDTO.getAge());
         assertEquals("Employee added", actual);
 	}
@@ -119,13 +119,13 @@ public class EmployeeServiceTests {
 	public void get_AllEmployees_as_listOfEmployee(){
 		 List<Employee> empListExpected = Arrays.asList(employee, employee1);
 	        
-	        // Mock the repository response
+	        // Mocking the repository response
 	        when(employeeRepository.findAll()).thenReturn(empListExpected);
 
 	        // Fetch employees via service
-	        List<EmployeeDTO> empListActual = service.getAllEmployees();
+	        List<EmployeeDTO> empListActual = service.getAllEmployees(); 
 	        
-	       log.info("The emplist data is "+ empListActual);
+	      
 	       
 	        assertNotNull(empListExpected);
 	        assertEquals(2, empListActual.size(), "The size of the employee list should be 2");
@@ -135,7 +135,7 @@ public class EmployeeServiceTests {
 
 	}
 	/************************************************************************************************************************************
-	 * we are doing parameterized Test here : Some frequently used Parameterized Test Annotations are : @CSVSource, @CSVFileSource
+	 * Demonstrating parameterized Test here : Some frequently used Parameterized Test Annotations are : @CSVSource, @CSVFileSource
 	 * @ValueSource
 	 * @EmptySource :Works for String, List, set ,map ,arrays of primitive datatypes (int[], char[] etc.)Objects arrays(String[], 
 	 * Integer[])
@@ -163,6 +163,7 @@ public class EmployeeServiceTests {
 	    assertNotNull(employeeDTO);
 	    assertEquals(empId.intValue(), employeeDTO.getEmpId());
 	    assertEquals("TestName", employeeDTO.getEmpName());
+	    verify(employeeRepository, times(1)).findById(empId);
 	}
 
 	@ParameterizedTest

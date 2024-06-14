@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.demo.appsplunk.dto.EmployeeDTO;
 import org.demo.appsplunk.entity.Employee;
 import org.demo.appsplunk.repository.EmployeeRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -53,7 +52,7 @@ public class EmployeeService {
 	            .map(employee -> this.convertToDto( employee))
 	            .collect(Collectors.toList());
 	            							   
-	    log.info("The customer payload from DTO{}"+ mylist);
+	    log.info("The customer payload from DTO: {} ", mylist);
 	    return mylist;
 	}
 

@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-
 public class EmployeeController {
 	
 	private final EmployeeService service;
