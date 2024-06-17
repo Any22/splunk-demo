@@ -25,7 +25,7 @@ public class EmployeeController {
 	@PostMapping(value = "/create", consumes = APPLICATION_JSON_VALUE )
 	  public ResponseEntity<String> createCustomer(@RequestBody EmployeeDTO employeeDTO ){
 		
-	    log.info("Creating Employee: The request payload {}"+ employeeDTO);
+	    log.info("Creating Employee: The request payload: {}", employeeDTO);
 	String status =   service.saveTheEmp(employeeDTO);
 	    
 	 return new ResponseEntity<>(status,HttpStatus.CREATED);
@@ -44,7 +44,7 @@ public class EmployeeController {
 		        	log.info("the data dto is empty or null");
 		            
 		        } 
-	    	   		log.info("The resposne payload {}"+ customerDto);
+	    	   		log.info("The resposne payload: {}", customerDto);
 		        return new ResponseEntity<>(customerDto, HttpStatus.OK);
 		        
 	       } catch (Exception ex) {
@@ -66,7 +66,7 @@ public class EmployeeController {
 		        	log.info("May not have Customer regsitered against the id: "+ empId);
 		            
 		        } 
-	    	   		log.info("The resposne payload {}"+ customerDto);
+	    	   		log.info("The resposne payload: {}", customerDto);
 	    	   		
 		        return new ResponseEntity<>(customerDto, HttpStatus.OK);
 		        
